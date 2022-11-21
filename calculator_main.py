@@ -37,12 +37,6 @@ class Main(QDialog):
         button_product.clicked.connect(lambda state, operation = "*": self.button_operation_clicked(operation))
         button_division.clicked.connect(lambda state, operation = "/": self.button_operation_clicked(operation))
 
-        ### 사칙연산 버튼을 layout_operation 레이아웃에 추가
-        layout_operation.addWidget(button_plus)
-        layout_operation.addWidget(button_minus)
-        layout_operation.addWidget(button_product)
-        layout_operation.addWidget(button_division)
-
         ### =, clear, backspace 버튼 생성
         button_equal = QPushButton("=")
         button_clear = QPushButton("Clear")
@@ -58,7 +52,6 @@ class Main(QDialog):
         layout_clear_equal.addWidget(button_backspace)
         layout_clear_equal.addWidget(button_equal)
 
-        ### 숫자 버튼 생성하고, layout_number 레이아웃에 추가
         ### 각 숫자 버튼을 클릭했을 때, 숫자가 수식창에 입력 될 수 있도록 시그널 설정
         number_button_dict = {}
         for number in range(0, 10):
@@ -80,12 +73,12 @@ class Main(QDialog):
         button_double_zero.clicked.connect(lambda state, num = "00": self.number_button_clicked(num))
         layout_number.addWidget(button_double_zero, 5, 0)
 
-        ### 사칙연산 버튼 레이아웃 추가
-        layout_number.addWidget(QPushButton("÷"), 1, 4)
-        layout_number.addWidget(QPushButton("x"), 2, 4)
-        layout_number.addWidget(QPushButton("-"), 3, 4)
-        layout_number.addWidget(QPushButton("+"), 4, 4)
-        layout_number.addWidget(QPushButton("="), 5, 4)
+        ### 사칙연산 레이아웃 
+        layout_number.addWidget(button_equal, 5, 4)
+        layout_number.addWidget(button_division, 1, 4)
+        layout_number.addWidget(button_product, 2, 4)
+        layout_number.addWidget(button_minus, 3, 4)
+        layout_number.addWidget(button_plus, 4, 4)
 
         ### 각 레이아웃을 main_layout 레이아웃에 추가
         main_layout.addLayout(layout_equation_solution)
@@ -112,7 +105,7 @@ class Main(QDialog):
     def button_equal_clicked(self):
         equation = self.equation.text()
         solution = eval(equation)
-        self.solution.setText(str(solution))
+        self.equation.setText(str(solution))
 
     def button_clear_clicked(self):
         self.equation.setText("")
