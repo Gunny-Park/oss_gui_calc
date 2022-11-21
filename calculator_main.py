@@ -10,20 +10,20 @@ class Main(QDialog):
         main_layout = QVBoxLayout()
 
         ### 각 위젯을 배치할 레이아웃을 미리 만들어 둠
-        layout_operation = QHBoxLayout()
+        layout_operation = QGridLayout()
         layout_clear_equal = QHBoxLayout()
         layout_number = QGridLayout()
         layout_equation_solution = QFormLayout()
 
         ### 수식 입력과 답 출력을 위한 LineEdit 위젯 생성
-        label_equation = QLabel("Equation: ")
+        label_equation = QLabel("")
         label_solution = QLabel("Number: ")
         self.equation = QLineEdit("")
         self.solution = QLineEdit("")
 
         ### layout_equation_solution 레이아웃에 수식, 답 위젯을 추가
         layout_equation_solution.addRow(label_equation, self.equation)
-        layout_equation_solution.addRow(label_solution, self.solution)
+        #layout_equation_solution.addRow(label_solution, self.solution)
 
         ### 사칙연상 버튼 생성
         button_plus = QPushButton("+")
@@ -80,11 +80,17 @@ class Main(QDialog):
         button_double_zero.clicked.connect(lambda state, num = "00": self.number_button_clicked(num))
         layout_number.addWidget(button_double_zero, 3, 0)
 
+        ### 사칙연산 버튼 레이아웃 추가
+        layout_number.addWidget(QPushButton("x"), 0, 4)
+        layout_number.addWidget(QPushButton("-"), 1, 4)
+        layout_number.addWidget(QPushButton("+"), 2, 4)
+        layout_number.addWidget(QPushButton("="), 3, 4)
+
         ### 각 레이아웃을 main_layout 레이아웃에 추가
         main_layout.addLayout(layout_equation_solution)
-        main_layout.addLayout(layout_operation)
-        main_layout.addLayout(layout_clear_equal)
+        #main_layout.addLayout(layout_clear_equal)
         main_layout.addLayout(layout_number)
+        #main_layout.addLayout(layout_operation)
 
         self.setLayout(main_layout)
         self.show()
