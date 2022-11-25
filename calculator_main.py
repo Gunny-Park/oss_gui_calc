@@ -29,7 +29,7 @@ class Main(QDialog):
         button_plus = QPushButton("+")
         button_minus = QPushButton("-")
         button_product = QPushButton("x")
-        button_division = QPushButton("/")
+        button_division = QPushButton("÷")
 
         ### 사칙연산 버튼을 클릭했을 때, 각 사칙연산 부호가 수식창에 추가될 수 있도록 시그널 설정
         button_plus.clicked.connect(lambda state, operation = "+": self.button_operation_clicked(operation))
@@ -79,6 +79,21 @@ class Main(QDialog):
         layout_number.addWidget(button_product, 2, 4)
         layout_number.addWidget(button_minus, 3, 4)
         layout_number.addWidget(button_plus, 4, 4)
+
+        ### new_btn
+        button_mod = QPushButton("%")
+        button_ce = QPushButton("CE")
+        button_c = QPushButton("C")
+        button_sqr = QPushButton("√x")
+        button_pow = QPushButton("x²")
+        button_rev = QPushButton("1/x")
+        layout_number.addWidget(button_ce, 0, 1)        
+        layout_number.addWidget(button_c, 0, 2)
+        layout_number.addWidget(button_backspace, 0, 4)
+        layout_number.addWidget(button_mod, 0, 0)
+        layout_number.addWidget(button_sqr, 1, 2)
+        layout_number.addWidget(button_pow, 1, 1)
+        layout_number.addWidget(button_rev, 1, 0)
 
         ### 각 레이아웃을 main_layout 레이아웃에 추가
         main_layout.addLayout(layout_equation_solution)
