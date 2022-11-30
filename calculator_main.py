@@ -17,7 +17,7 @@ class Main(QDialog):
 
         ### 수식 입력과 답 출력을 위한 LineEdit 위젯 생성
         label_equation = QLabel("")
-        label_solution = QLabel("Number: ")
+        #label_solution = QLabel("Number: ")
         self.equation = QLineEdit("")
         self.solution = QLineEdit("")
 
