@@ -1,5 +1,9 @@
 import sys
 from PyQt5.QtWidgets import *
+import math
+
+operand = []
+operator = []
 
 class Main(QDialog):
     def __init__(self):
@@ -82,11 +86,18 @@ class Main(QDialog):
 
         ### new_btn
         button_mod = QPushButton("%")
+        button_mod.clicked.connect(lambda state, operation = "%": self.button_operation_clicked(operation))
+
         button_ce = QPushButton("CE")
+        button_ce.clicked.connect(self.button_clear_clicked)
         button_c = QPushButton("C")
+        button_c.clicked.connect(self.button_clear_clicked)
         button_sqr = QPushButton("√x")
+        button_sqr.clicked.connect(lambda state, operation = "√x": self.button_oper_clicked(operation))
         button_pow = QPushButton("x²")
+        button_pow.clicked.connect(lambda state, operation = "x²": self.button_oper_clicked(operation))
         button_rev = QPushButton("1/x")
+        button_rev.clicked.connect(lambda state, operation = "1/x": self.button_oper_clicked(operation))
         layout_number.addWidget(button_ce, 0, 1)        
         layout_number.addWidget(button_c, 0, 2)
         layout_number.addWidget(button_backspace, 0, 4)
@@ -113,18 +124,49 @@ class Main(QDialog):
         self.equation.setText(equation)
 
     def button_operation_clicked(self, operation):
-        equation = self.equation.text()
-        equation += operation
-        self.equation.setText(equation)
+        data = int(self.equation.text())
+        operand.append(data)
+        operator.append(str(operation))
+        self.equation.setText("")
+
+    def button_oper_clicked(self, operation):
+        data = int(self.equation.text())
+        operand.append(data)
+        operator.append(str(operation))
+        if operator[0] == "√x":
+            solution = math.sqrt(operand[0])
+        elif operator[0] == "x²":
+            solution = operand[0] * operand[0]
+        elif operator[0] == "1/x":
+            solution = 1 / operand[0]
+        else:
+            solution = 'error'
+        self.equation.setText(str(solution))
 
     def button_equal_clicked(self):
-        equation = self.equation.text()
-        solution = eval(equation)
+        data = int(self.equation.text())
+        operand.append(data)
+        #self.equation.setText("")
+        if operator[0] == "+":
+            solution = (operand[0] + operand[1])
+        elif operator[0] == "-":
+            solution = (operand[0] - operand[1])
+        elif operator[0] == "*":
+            solution = (operand[0] * operand[1])
+        elif operator[0] == "/":
+            solution = (operand[0] / operand[1])
+        elif operator[0] == "%":
+            solution = (operand[0] % operand[1])
+        else:
+            solution = 'error'
         self.equation.setText(str(solution))
 
     def button_clear_clicked(self):
         self.equation.setText("")
-        self.solution.setText("")
+        operand.clear()
+        operator.clear()
+
+        #self.solution.setText("")
 
     def button_backspace_clicked(self):
         equation = self.equation.text()
